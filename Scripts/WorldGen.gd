@@ -2,7 +2,7 @@ extends Node3D
 
 @export var WORLD_WIDTH : int # in blocks
 @export var SEED : int = 2009
-const WORLD_DEPTH : int = 64
+const WORLD_DEPTH : int = 32
 const CHUNK_SIZE : int = 16
 
 class Chunk:
@@ -29,7 +29,7 @@ const TILESET_PATH : String = "res://Assets/tileset.png"
 func _ready():
 	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
 	noise.seed = SEED
-	noise.frequency = 0.035
+	noise.frequency = 0.004
 	generate_world()
 	build_world()
 	block_material.albedo_texture = load(TILESET_PATH)
@@ -147,11 +147,13 @@ func generate_world():
 					if wx >= WORLD_WIDTH or wz >= WORLD_WIDTH:
 						continue
 
-					var height: int = int(noise.get_noise_2d(wx, wz) * 4)
+					var height: int = int((noise.get_noise_2d(wx, wz) + 1) / 2 * (WORLD_DEPTH - 1))
 					for y in WORLD_DEPTH:
 						var block = null
 						if y == height + 6:
 							block = Block.new(Block.BlockType.GRASS)
+						elif y <= height:
+							block = Block.new(Block.BlockType.STONE)
 						elif y <= height + 6:
 							block = Block.new(Block.BlockType.DIRT)
 						if block:

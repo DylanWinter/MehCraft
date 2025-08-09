@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://crc1o5ns5g4c1"]
+[gd_scene load_steps=5 format=3 uid="uid://crc1o5ns5g4c1"]
 
 [ext_resource type="Script" uid="uid://bexwq4g5jyyo1" path="res://Scripts/WorldGen.gd" id="1_pq8q7"]
 [ext_resource type="PackedScene" uid="uid://bwggrf7sbmkcv" path="res://PlayerCharacter/PlayerCharacterScene.tscn" id="2_pyidc"]
+[ext_resource type="Texture2D" uid="uid://wmjrqrssfkhh" path="res://Assets/xhair.png" id="3_vvh5c"]
 
 [sub_resource type="Environment" id="Environment_vho56"]
 ambient_light_source = 3
@@ -11,7 +12,7 @@ ambient_light_color = Color(1, 1, 1, 1)
 
 [node name="WorldGen" type="Node3D" parent="."]
 script = ExtResource("1_pq8q7")
-WORLD_WIDTH = 256
+WORLD_WIDTH = 128
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_vho56")
@@ -21,6 +22,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.33399, 38.0936, -1.74019)
 maxSpeed = 22.5
 heightChangeSpeed = 0.0
 worldGen = NodePath("../WorldGen")
+blockInteractDistance = 8.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.980254, -0.197743, 0, 0.197743, 0.980254, 0, 0, 0, 1, 9.20882, 40, 0)
@@ -31,3 +33,29 @@ directional_shadow_split_1 = 0.4
 directional_shadow_split_2 = 0.3
 directional_shadow_split_3 = 0.6
 directional_shadow_max_distance = 565.3
+
+[node name="HUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Crosshair" type="TextureRect" parent="HUD"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.7, 0.7)
+mouse_filter = 2
+texture = ExtResource("3_vvh5c")

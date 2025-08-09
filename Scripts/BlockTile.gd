@@ -5,9 +5,10 @@ enum Tile {
 	GRASS_SIDE,
 	DIRT,
 	STONE,
-	TREE_CX,
-	TREE_SIDE,
+	LOG,
+	LOG_SIDE,
 	LEAVES,
+	BRICKS
 }
 	
 

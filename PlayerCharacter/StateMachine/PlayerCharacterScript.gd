@@ -74,6 +74,7 @@ var coyoteJumpOn : bool = false
 
 @export_group("World Gen")
 @export var worldGen : Node;
+@export var blockInteractDistance : float
 
 #references variables
 @onready var camHolder : Node3D = $CameraHolder
@@ -101,7 +102,7 @@ func _process(_delta: float):
 	if Input.is_action_just_pressed("leftClick") or Input.is_action_just_pressed("rightClick"):
 		var from = $CameraHolder/Camera.global_transform.origin
 		var direction = -$CameraHolder/Camera.global_transform.basis.z
-		var result = worldGen.raycast_block(from, direction.normalized(), 100)
+		var result = worldGen.raycast_block(from, direction.normalized(), blockInteractDistance)
 
 		if result.has("hit"):
 			var blockPos: Vector3i = result["hit"]
