@@ -41,7 +41,7 @@ var mouseFree : bool = false
 
 #references variables
 @onready var camera : Camera3D = $Camera
-@onready var playChar : PlayerCharacter = $".."
+@onready var playChar : Node = $".."
 @onready var hud : CanvasLayer = $"../HUD"
 
 func _ready():

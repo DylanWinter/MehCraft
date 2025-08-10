@@ -207,8 +207,7 @@ func build_chunk_mesh(chunk_coords: Vector2i) -> void:
 				var p101 : Vector3 = pos + Vector3(1, 0, 1)
 				var p111 : Vector3 = pos + Vector3(1, 1, 1)
 				var p011 : Vector3 = pos + Vector3(0, 1, 1)
-
-				# Use your is_air function, but check neighbors globally:
+				
 				# Front (Z-)
 				if is_air(Vector3i(x, y, z - 1)):
 					var uvs = block.get_tile_uvs(block.side)

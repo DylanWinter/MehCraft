@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-class_name PlayerCharacter 
+class_name PlayerCharacter
 
 @export_group("Movement variables")
 var moveSpeed : float
@@ -73,8 +73,9 @@ var coyoteJumpOn : bool = false
 @export var jumpAction : String = ""
 
 @export_group("World Gen")
-@export var worldGen : Node;
+@export var worldGen : Node
 @export var blockInteractDistance : float
+@export var hotbar : Node
 
 #references variables
 @onready var camHolder : Node3D = $CameraHolder
@@ -85,7 +86,31 @@ var coyoteJumpOn : bool = false
 @onready var ceilingCheck : RayCast3D = $Raycasts/CeilingCheck
 @onready var floorCheck : RayCast3D = $Raycasts/FloorCheck
 
+var hotbar_index : int = 0
+var active_blocktype : Block.BlockType = 0
 
+func hotbar_num_from_input() -> int:
+	if Input.is_action_just_pressed("1"):
+		return 1
+	elif Input.is_action_just_pressed("2"):
+		return 2
+	elif Input.is_action_just_pressed("3"):
+		return 3
+	elif Input.is_action_just_pressed("4"):
+		return 4
+	elif Input.is_action_just_pressed("5"):
+		return 5
+	elif Input.is_action_just_pressed("6"):
+		return 6
+	elif Input.is_action_just_pressed("7"):
+		return 7
+	elif Input.is_action_just_pressed("8"):
+		return 8
+	elif Input.is_action_just_pressed("9"):
+		return 9
+	elif Input.is_action_just_pressed("0"):
+		return 10
+	return -1
 
 func _ready():
 	#set move variables, and value references
@@ -120,10 +145,17 @@ func _process(_delta: float):
 				   prevPos.y >= 0 and prevPos.y < worldGen.WORLD_DEPTH and \
 				   prevPos.z >= 0 and prevPos.z < worldGen.WORLD_WIDTH:
 					if worldGen.is_air(prevPos):
-						worldGen.set_block(prevPos, Block.new(Block.BlockType.DIRT))
+						worldGen.set_block(prevPos, Block.new(active_blocktype))
 						worldGen.update_adjacent_chunks(prevPos)
-			
-
+	
+	var num_input : int = hotbar_num_from_input()
+	var prev_hotbar_index : int = hotbar_index
+	if num_input > 0 and num_input <= hotbar.HotbarNodes.size() and num_input != prev_hotbar_index:
+		hotbar_index = num_input - 1
+		hotbar.HotbarNodes[hotbar_index].selected = true
+		hotbar.HotbarNodes[prev_hotbar_index].selected = false
+		active_blocktype = hotbar_index
+		
 	
 func _physics_process(_delta : float):
 	modifyPhysicsProperties()

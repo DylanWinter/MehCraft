@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://3mf3nnxax2r4"]
+
+[ext_resource type="Texture2D" uid="uid://dvni7fe2ewnjo" path="res://Assets/hotbarbox.png" id="1_a63da"]
+[ext_resource type="Script" uid="uid://dfdh4n8xyn2ir" path="res://Scripts/HotbarBox.gd" id="1_qyppn"]
+[ext_resource type="Texture2D" uid="uid://wmjrqrssfkhh" path="res://Assets/xhair.png" id="1_sdxml"]
+
+[node name="HotbarBox" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qyppn")
+
+[node name="Fill" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 44.0
+offset_bottom = 44.0
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("1_sdxml")
+
+[node name="Border" type="TextureRect" parent="."]
+z_index = -1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_a63da")
