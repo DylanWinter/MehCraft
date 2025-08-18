@@ -28,8 +28,8 @@ const TILESET_PATH : String = "res://Assets/tileset.png"
 
 func _ready():
 	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
-	noise.seed = SEED
-	noise.frequency = 0.004
+	noise.seed = randi()
+	noise.frequency = 0.0055
 	generate_world()
 	build_world()
 	block_material.albedo_texture = load(TILESET_PATH)
@@ -100,6 +100,10 @@ func is_air(pos: Vector3i) -> bool:
 		local_z += CHUNK_SIZE
 	return chunk.blocks[local_x][pos.y][local_z] == null
 
+# Determines whether a block is breakable
+func is_breakable(pos: Vector3i):
+	return not get_block(pos).block_type == Block.BlockType.BEDROCK
+
 # Gets the block at a position	
 func get_block(pos: Vector3i) -> Block:
 	var chunk_pos := block_to_chunk_coords(pos)
@@ -150,7 +154,9 @@ func generate_world():
 					var height: int = int((noise.get_noise_2d(wx, wz) + 1) / 2 * (WORLD_DEPTH - 1))
 					for y in WORLD_DEPTH:
 						var block = null
-						if y == height + 6:
+						if y == 0:
+							block = Block.new(Block.BlockType.BEDROCK)
+						elif y == height + 6:
 							block = Block.new(Block.BlockType.GRASS)
 						elif y <= height:
 							block = Block.new(Block.BlockType.STONE)

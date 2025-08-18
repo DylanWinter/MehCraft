@@ -135,8 +135,9 @@ func _process(_delta: float):
 			
 			# Break
 			if Input.is_action_just_pressed("leftClick"):
-				worldGen.set_block(blockPos, null)
-				worldGen.update_adjacent_chunks(blockPos)
+				if worldGen.is_breakable(blockPos):
+					worldGen.set_block(blockPos, null)
+					worldGen.update_adjacent_chunks(blockPos)
 				
 			# Place	
 			elif Input.is_action_just_pressed("rightClick"):
@@ -152,14 +153,16 @@ func _process(_delta: float):
 	var prev_hotbar_index : int = hotbar_index
 	if num_input > 0 and num_input <= hotbar.HotbarNodes.size() and num_input != prev_hotbar_index:
 		hotbar_index = num_input - 1
-		hotbar.HotbarNodes[hotbar_index].selected = true
 		hotbar.HotbarNodes[prev_hotbar_index].selected = false
+		hotbar.HotbarNodes[hotbar_index].selected = true
 		active_blocktype = hotbar_index
 		
 	
 func _physics_process(_delta : float):
 	modifyPhysicsProperties()
 	move_and_slide()
+	global_position.x = clamp(global_position.x, -worldGen.WORLD_WIDTH / 2, worldGen.WORLD_WIDTH / 2)
+	global_position.z = clamp(global_position.z, -worldGen.WORLD_WIDTH / 2, worldGen.WORLD_WIDTH / 2)
 		
 func modifyPhysicsProperties():
 	lastFramePosition = position #get play char position every frame

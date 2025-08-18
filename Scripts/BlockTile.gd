@@ -8,7 +8,9 @@ enum Tile {
 	LOG,
 	LOG_SIDE,
 	LEAVES,
-	BRICKS
+	BRICKS,
+	PLANKS,
+	BEDROCK
 }
 	
 

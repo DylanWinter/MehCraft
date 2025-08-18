@@ -3,15 +3,17 @@ class_name Block
 
 const BlockTile = preload("res://Scripts/BlockTile.gd")
 
-enum BlockType { DIRT=0, GRASS=1, STONE=2, LOG=3, LEAVES=4, BRICKS=5 }
+enum BlockType { DIRT=0, GRASS=1, STONE=2, LOG=3, LEAVES=4, BRICKS=5, PLANKS=6, BEDROCK=7 }
 
 static var TILE_SIZE : float = 1.0
 
+var block_type
 var top : int = BlockTile.Tile.GRASS
 var side : int = BlockTile.Tile.DIRT
 var bottom : int = BlockTile.Tile.DIRT
 
 func _init(type : BlockType = BlockType.GRASS):
+	block_type = type
 	top = blocks[type][0]
 	side = blocks[type][1]
 	bottom = blocks[type][2]
@@ -48,6 +50,8 @@ static var blocks : Dictionary = {
 									 BlockType.BRICKS:  [BlockTile.Tile.BRICKS,  BlockTile.Tile.BRICKS,       BlockTile.Tile.BRICKS],
 									 BlockType.LOG:  [BlockTile.Tile.LOG,  BlockTile.Tile.LOG_SIDE,       BlockTile.Tile.LOG],
 									 BlockType.LEAVES:  [BlockTile.Tile.LEAVES,  BlockTile.Tile.LEAVES,       BlockTile.Tile.LEAVES],
+									 BlockType.PLANKS:  [BlockTile.Tile.PLANKS,  BlockTile.Tile.PLANKS,       BlockTile.Tile.PLANKS],
+									 BlockType.BEDROCK:  [BlockTile.Tile.BEDROCK,  BlockTile.Tile.BEDROCK,       BlockTile.Tile.BEDROCK],
 								 };
 
 static var tile_coords : Dictionary = {
@@ -58,6 +62,8 @@ static var tile_coords : Dictionary = {
 										BlockTile.Tile.LOG : Vector2(0, 3),
 										BlockTile.Tile.LOG_SIDE : Vector2(0, 4),
 										BlockTile.Tile.LEAVES : Vector2(1, 0),
-										BlockTile.Tile.BRICKS : Vector2(1, 1)
+										BlockTile.Tile.BRICKS : Vector2(1, 1),
+										BlockTile.Tile.PLANKS : Vector2(1, 2),
+										BlockTile.Tile.BEDROCK : Vector2(1, 4)
 									}									
 	
